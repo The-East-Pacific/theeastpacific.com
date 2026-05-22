@@ -4,6 +4,8 @@ layout: default
 
 {% include home.html %}
 
-<div id="post-list">
-  {% include post-list.html %}
+<div class="post-list">
+  {% for post in site.posts %}
+    {% include post.html %}
+  {% endfor %}
 </div>
