@@ -4,8 +4,10 @@ layout: default
 
 {% include home.html %}
 
-<div class="post-list">
-  {% for post in site.posts %}
-    {% include post.html %}
+<div id="post-list">
+  {% for post in paginator.posts %}
+    {% include_cached post-card.html post=post %}
   {% endfor %}
 </div>
+
+{% include paginator.html %}
