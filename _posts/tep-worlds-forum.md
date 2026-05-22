@@ -1,5 +1,7 @@
 ---
-title: "Tep Worlds Forum"
+layout: post
+title: Tep Worlds Forum
+---
 date: 2026-05-21 21:32:00 -0500
 description: "Short description for SEO and previews."
 image:
