@@ -9,11 +9,13 @@ async function fetchTopic(id) {
   if (!res.ok) throw new Error(`Failed to fetch ${id}`);
   return res.json();
 }
+
 function toFrontmatter(data) {
   const post = data.post_stream.posts[0];
   if (!post?.created_at) {
     throw new Error(`Topic ${data.id} has no created_at — skipping`);
   }
+
   const fm = {
     title: data.title,
     date: new Date(post.created_at).toISOString().slice(0, 10),
@@ -22,11 +24,11 @@ function toFrontmatter(data) {
     discourseId: data.id,
     excerpt: (post.cooked || '').replace(/<[^>]+>/g, '').slice(0, 200),
   };
-  // ... rest unchanged
-}
+
   const fmYaml = Object.entries(fm)
-    .map(([k,v]) => `${k}: ${JSON.stringify(v)}`)
-    .join('\n');
+   .map(([k,v]) => `${k}: ${JSON.stringify(v)}`)
+   .join('\n');
+
   return `---\n${fmYaml}\n---\n\n${post.cooked}\n`;
 }
 
@@ -42,5 +44,4 @@ async function sync(ids) {
 }
 
 // Example: sync the topics you care about
-// You can pull this list from Discourse API /latest.json too
 sync([12281]);
