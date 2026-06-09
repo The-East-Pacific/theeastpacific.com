@@ -1,60 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:wght@400;600&display=swap');
 
 :root {
-  --tep-green:       #1A6F34;
+  --tep-green: #1A6F34;
   --tep-green-light: #2A8C4A;
-  --tep-yellow:      #F5E423;
-  --tep-teal:        #6EA7A1;
-  --tep-dark:        #281F24;
-  --tep-dark-deep:   #1a1418;
-  --tep-light:       #F2F2F0;
-  --tep-muted:       #B8B0B6;
-  --tep-dim:         #7A7077;
+  --tep-yellow: #F5E423;
+  --tep-teal: #6EA7A1;
+  --tep-dark: #281F24;
+  --tep-dark-deep: #1a1418;
+  --tep-light: #F2F2F0;
+  --tep-muted: #B8B0B6;
+  --tep-dim: #7A7077;
 }
 
-/* ===== Dark theme (default) ===== */
 :root {
-  --sl-color-accent-low:    #4a4410;
-  --sl-color-accent:        var(--tep-yellow);
-  --sl-color-accent-high:   #f8ee5e;
-
-  --sl-color-bg:            var(--tep-dark);
-  --sl-color-bg-nav:        rgba(40, 31, 36, 0.8);
-  --sl-color-bg-sidebar:    var(--tep-dark-deep);
-  --sl-color-bg-inline-code:#3D3340;
-  --sl-color-bg-accent:     rgba(245, 228, 35, 0.12);
-
-  --sl-color-white:         var(--tep-light);
-  --sl-color-gray-1:        #D8D2D6;
-  --sl-color-gray-2:        var(--tep-muted);
-  --sl-color-gray-3:        var(--tep-dim);
-  --sl-color-gray-5:        #2a2429;
-  --sl-color-gray-6:        var(--tep-dark-deep);
-  --sl-color-black:         var(--tep-dark-deep);
-
+  --sl-color-accent-low: #4a4410;
+  --sl-color-accent: var(--tep-yellow);
+  --sl-color-accent-high: #f8ee5e;
+  --sl-color-bg: var(--tep-dark);
+  --sl-color-bg-nav: rgba(40, 31, 36, 0.8);
+  --sl-color-bg-sidebar: var(--tep-dark-deep);
+  --sl-color-bg-inline-code: #3D3340;
+  --sl-color-bg-accent: rgba(245, 228, 35, 0.12);
+  --sl-color-white: var(--tep-light);
+  --sl-color-gray-1: #D8D2D6;
+  --sl-color-gray-2: var(--tep-muted);
+  --sl-color-gray-3: var(--tep-dim);
+  --sl-color-gray-5: #2a2429;
+  --sl-color-gray-6: var(--tep-dark-deep);
+  --sl-color-black: var(--tep-dark-deep);
   --sl-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --sl-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 }
 
-/* ===== Light theme ===== */
 :root[data-theme='light'] {
-  --sl-color-accent-low:    #fff8b8;
-  --sl-color-accent:        #c8b91e;
-  --sl-color-accent-high:   #8a7e0d;
-
-  --sl-color-white:         #1a1418;
-  --sl-color-bg:            #f8f6f0;
-  --sl-color-bg-nav:        rgba(248, 246, 240, 0.9);
-  --sl-color-bg-sidebar:    #efece4;
-  --sl-color-bg-inline-code:#e8e4d8;
-  --sl-color-bg-accent:     rgba(26, 111, 52, 0.12);
-
-  --sl-color-gray-1:        #2a2429;
-  --sl-color-gray-2:        #4a4046;
-  --sl-color-gray-3:        #6a6066;
-  --sl-color-gray-5:        #d8d4cc;
-  --sl-color-gray-6:        #c8c4bc;
-  --sl-color-black:         #1a1418;
+  --sl-color-accent-low: #fff8b8;
+  --sl-color-accent: #c8b91e;
+  --sl-color-accent-high: #8a7e0d;
+  --sl-color-white: #1a1418;
+  --sl-color-bg: #f8f6f0;
+  --sl-color-bg-nav: rgba(248, 246, 240, 0.9);
+  --sl-color-bg-sidebar: #efece4;
+  --sl-color-bg-inline-code: #e8e4d8;
+  --sl-color-bg-accent: rgba(26, 111, 52, 0.12);
+  --sl-color-gray-1: #2a2429;
+  --sl-color-gray-2: #4a4046;
+  --sl-color-gray-3: #6a6066;
+  --sl-color-gray-5: #d8d4cc;
+  --sl-color-gray-6: #c8c4bc;
+  --sl-color-black: #1a1418;
 }
 
 .sl-markdown-content {
@@ -80,4 +73,72 @@
 }
 
 nav.sl-nav {
-  background: rgba(40
+  background: rgba(40, 31, 36, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(242, 242, 240, 0.06);
+}
+
+:root[data-theme='light'] nav.sl-nav {
+  background: rgba(248, 246, 240, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.card {
+  background: var(--tep-dark-deep) !important;
+  border: 1px solid rgba(242, 242, 240, 0.08) !important;
+  border-radius: 14px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card:hover {
+  border-color: var(--tep-yellow) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(245, 228, 35, 0.08) !important;
+}
+
+:root[data-theme='light'] .card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+:root[data-theme='light'] .card:hover {
+  border-color: var(--tep-green) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--tep-dark-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a4046;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tep-yellow);
+}
+
+:root[data-theme='light'] ::-webkit-scrollbar-track {
+  background: #e8e4d8;
+}
+
+:root[data-theme='light'] ::-webkit-scrollbar-thumb {
+  background: #b8b0a8;
+}
+
+::selection {
+  background: var(--tep-yellow);
+  color: var(--tep-dark-deep);
+}
+
+:root[data-theme='light'] ::selection {
+  background: var(--tep-green);
+  color: white;
+}
