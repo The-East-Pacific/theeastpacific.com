@@ -4,19 +4,15 @@ import DiscoursePost from '../../components/DiscoursePost.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map((post) => {
-    // post.id is like '12281-saradania0914-ban-report.md'
-    const slug = post.id.replace(/\.[^/.]+$/, '');
-    return {
-      params: { slug },
-      props: { post },
-    };
-  });
+  return posts.map(post => ({
+    params: { slug: post.id.replace(/\.[^/.]+$/, '') },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <DiscoursePost frontmatter={post.data}>
-  <Content />
+  {Content? <Content /> : <p><em>No content synced yet.</em></p>}
 </DiscoursePost>
