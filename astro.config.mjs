@@ -28,7 +28,7 @@ export default defineConfig({
         {
           label: 'Site',
           items: [
-            { label: 'Home', slug: '/' },
+            { label: 'Home', slug: '' },
             { label: 'Blog', slug: 'blog' },
           ],
         },
