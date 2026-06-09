@@ -9,17 +9,21 @@ async function fetchTopic(id) {
   if (!res.ok) throw new Error(`Failed to fetch ${id}`);
   return res.json();
 }
-
 function toFrontmatter(data) {
   const post = data.post_stream.posts[0];
+  if (!post?.created_at) {
+    throw new Error(`Topic ${data.id} has no created_at — skipping`);
+  }
   const fm = {
     title: data.title,
-    date: new Date(post.created_at).toISOString().slice(0,10),
+    date: new Date(post.created_at).toISOString().slice(0, 10),
     author: post.username,
     discourseUrl: `${DISCOURSE_BASE}/t/${data.slug}/${data.id}`,
     discourseId: data.id,
-    excerpt: post.cooked.replace(/<[^>]+>/g, '').slice(0, 200),
+    excerpt: (post.cooked || '').replace(/<[^>]+>/g, '').slice(0, 200),
   };
+  // ... rest unchanged
+}
   const fmYaml = Object.entries(fm)
     .map(([k,v]) => `${k}: ${JSON.stringify(v)}`)
     .join('\n');
