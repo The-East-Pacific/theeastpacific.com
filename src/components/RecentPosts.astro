@@ -1,14 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter(post => post.data.date || post.data.pubDate) // Skip posts without dates
+  .sort((a, b) => {
+    const dateA = new Date(a.data.date || a.data.pubDate).getTime();
+    const dateB = new Date(b.data.date || b.data.pubDate).getTime();
+    return dateB - dateA;
+  })
   .slice(0, 10);
 
-function formatDate(date) {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric'
-  });
+function formatDate(value) {
+  if (!value) return '';
+  try {
+    const d = value instanceof Date ? value : new Date(value);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  } catch {
+    return '';
+  }
 }
 ---
 {posts.length === 0 ? (
