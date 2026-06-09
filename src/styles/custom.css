@@ -239,42 +239,50 @@ nav.sl-nav {
 
 /* ===== "Discuss this on the forum" link as a button ===== */
 /* Target any paragraph in post content that contains a forum link */
+/* Style the paragraph containing the forum link as a complete button */
 .post-content p:has(a[href*="forum.theeastpacific.com"]) {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(242, 242, 240, 0.08);
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--tep-green) !important;
+  color: var(--tep-light) !important;
+  padding: 0.85rem 1.5rem !important;
+  border-radius: 10px !important;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 3rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   text-align: center;
-  display: flex;
-  justify-content: center;
+  border-top: 1px solid rgba(242, 242, 240, 0.08);
+  padding-top: 2rem !important;
+  position: relative;
 }
 
 :root[data-theme='light'] .post-content p:has(a[href*="forum.theeastpacific.com"]) {
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.post-content a[href*="forum.theeastpacific.com"] {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--tep-green);
-  color: var(--tep-light) !important;
-  padding: 0.85rem 1.5rem;
-  border-radius: 10px;
-  font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
-  text-decoration: none !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.post-content a[href*="forum.theeastpacific.com"]:hover {
-  background: var(--tep-green-light);
-  color: var(--tep-light) !important;
+.post-content p:has(a[href*="forum.theeastpacific.com"]):hover {
+  background: var(--tep-green-light) !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-:root[data-theme='light'] .post-content a[href*="forum.theeastpacific.com"] {
+.post-content p:has(a[href*="forum.theeastpacific.com"]) a {
+  color: var(--tep-light) !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  display: inline;
+  padding: 0;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme='light'] .post-content p:has(a[href*="forum.theeastpacific.com"]) a {
   color: #ffffff !important;
 }
 
