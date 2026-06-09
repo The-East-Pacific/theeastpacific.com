@@ -1,6 +1,6 @@
 # The East Pacific — News & Blog
 
-The official news site for [The East Pacific](https://theeastpacific.com), built with [Astro](https://astro.build) + [Starlight](https://starlight.astro.build).
+The official news site for [Tep Worlds](https://theeastpacific.com), built with [Astro](https://astro.build) + [Starlight](https://starlight.astro.build).
 
 ## How content works
 
