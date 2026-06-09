@@ -11,10 +11,8 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-console.log('Rendering', post.id, 'body length:', post.body?.length ?? 0);
-
 const { Content } = await render(post);
 ---
 <DiscoursePost frontmatter={post.data}>
-  {Content ? <Content /> : <p><em>No body found in markdown file.</em></p>}
+  {Content ? <Content /> : <p><em>Content failed to render.</em></p>}
 </DiscoursePost>
