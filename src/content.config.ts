@@ -12,8 +12,10 @@ export const collections = {
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
     schema: z.object({
       title: z.string(),
-      description: z.string().optional(),
+      author: z.string().optional(),
+      date: z.coerce.date().optional(),
       pubDate: z.coerce.date().optional(),
+      discourseUrl: z.string().optional(),
     }),
   }),
 };
