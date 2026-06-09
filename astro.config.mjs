@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://theeastpacific.com',
+  base: '',
   integrations: [
     starlight({
       title: 'The East Pacific',
@@ -28,8 +29,12 @@ export default defineConfig({
         {
           label: 'Site',
           items: [
-            { label: 'Home', slug: '' },
-            { label: 'Blog', slug: 'blog' },
+            // points to src/content/docs/index.mdx
+            { label: 'Home', link: '/' },
+            
+            // Autogenerate from src/content/docs/blog/
+            // Create src/content/docs/blog/ and add at least one .md file
+            { label: 'Blog', autogenerate: { directory: 'blog' } },
           ],
         },
       ],
