@@ -1,0 +1,61 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const { title = 'The East Pacific', description = 'News and announcements from The East Pacific community.' } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+</head>
+<body>
+  <SiteHeader currentPath={currentPath} />
+  
+  <main class="site-main">
+    <slot />
+  </main>
+  
+  <SiteFooter />
+</body>
+</html>
+
+<style is:global>
+  :root {
+    --tep-light: #f2f2f0;
+    --tep-muted: #8a8580;
+    --tep-dim: #6b6660;
+    --tep-dark-deep: #1a1418;
+    --tep-primary: #2d5e3e;
+    --tep-green: #3a7250;
+    --tep-green-light: #4a8862;
+    --tep-yellow: #d4a574;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
+    background: var(--tep-dark-deep);
+    color: var(--tep-light);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .site-main {
+    flex: 1;
+    width: 100%;
+  }
+</style>
