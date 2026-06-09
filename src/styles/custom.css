@@ -11,6 +11,7 @@
   --tep-muted:       #B8B0B6;
   --tep-dim:         #7A7077;
 }
+
 /* ===== Dark theme (default) ===== */
 :root {
   --sl-color-accent-low:    #4a4410;
@@ -115,6 +116,7 @@ nav.sl-nav {
 
 ::selection { background: var(--tep-yellow); color: var(--tep-dark-deep); }
 :root[data-theme='light'] ::selection { background: var(--tep-green); color: white; }
+
 /* ===== Light theme fixes for custom elements ===== */
 :root[data-theme='light'] .discord-widget {
   border-color: rgba(0, 0, 0, 0.12) !important;
@@ -185,4 +187,92 @@ nav.sl-nav {
   background: #ffffff !important;
   color: #1a1418 !important;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ===== Blog post content styling ===== */
+.post-content {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--tep-light);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+:root[data-theme='light'] .post-content {
+  color: #1a1418;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.post-content p {
+  margin: 1.25rem 0;
+}
+
+.post-content a:not(.discuss-link) {
+  color: var(--tep-teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.post-content a:not(.discuss-link):hover {
+  color: var(--tep-yellow);
+}
+
+/* ===== "Discuss this on the forum" link as a button ===== */
+/* Target any paragraph in post content that contains a forum link */
+.post-content p:has(a[href*="forum.theeastpacific.com"]) {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(242, 242, 240, 0.08);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+:root[data-theme='light'] .post-content p:has(a[href*="forum.theeastpacific.com"]) {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.post-content a[href*="forum.theeastpacific.com"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--tep-green);
+  color: var(--tep-light) !important;
+  padding: 0.85rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-content a[href*="forum.theeastpacific.com"]:hover {
+  background: var(--tep-green-light);
+  color: var(--tep-light) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme='light'] .post-content a[href*="forum.theeastpacific.com"] {
+  color: #ffffff !important;
+}
+
+:root[data-theme='light'] .post-content a[href*="forum.theeastpacific.com"]:hover {
+  color: #ffffff !important;
 }
