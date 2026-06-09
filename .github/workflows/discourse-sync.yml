@@ -1,0 +1,27 @@
+name: Sync Discourse Blog Posts
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # every 30 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync Discourse posts
+        run: node scripts/sync-discourse.js
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: sync Discourse blog posts'
+          file_pattern: 'src/content/blog/*.md'
