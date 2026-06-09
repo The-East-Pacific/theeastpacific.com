@@ -1,0 +1,157 @@
+---
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/blog/', label: 'Blog' },
+  { href: 'https://forum.theeastpacific.com', label: 'Forum', external: true },
+  { href: 'https://tep.one', label: 'Community', external: true },
+];
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="brand">
+      <span class="brand-mark">TEP</span>
+      <span class="brand-text">The East Pacific</span>
+    </a>
+    
+    <nav class="site-nav">
+      {navLinks.map(link => (
+        <a 
+          href={link.href} 
+          class={`nav-link ${currentPath === link.href ? 'active' : ''}`}
+          {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
+        >
+          {link.label}
+          {link.external && <span class="external-icon">↗</span>}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: rgba(40, 31, 36, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(242, 242, 240, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  :global([data-theme='light']) .site-header {
+    background: rgba(248, 246, 240, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--tep-light);
+    font-weight: 700;
+  }
+  
+  :global([data-theme='light']) .brand {
+    color: #1a1418;
+  }
+  
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--tep-yellow);
+    color: var(--tep-dark-deep);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  
+  .brand-text {
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    color: var(--tep-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .nav-link:hover {
+    color: var(--tep-light);
+    background: rgba(242, 242, 240, 0.05);
+  }
+  
+  :global([data-theme='light']) .nav-link {
+    color: #6a6066;
+  }
+  
+  :global([data-theme='light']) .nav-link:hover {
+    color: #1a1418;
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .nav-link.active {
+    color: var(--tep-yellow);
+    background: rgba(245, 228, 35, 0.1);
+  }
+  
+  .external-icon {
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+  
+  @media (max-width: 640px) {
+    .header-inner {
+      padding: 0.75rem 1rem;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .brand-text {
+      font-size: 0.95rem;
+    }
+    
+    .site-nav {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .nav-link {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.75rem;
+    }
+  }
+</style>
