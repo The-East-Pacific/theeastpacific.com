@@ -17,7 +17,7 @@ function formatDate(value) {
     <div class="post-meta">
       <span>By <strong>{frontmatter.author}</strong></span>
       <span>·</span>
-      <span>{formatDate(frontmatter.date)}</span>
+<span>{formatDate(frontmatter.pubDate || frontmatter.date)}</span>
     </div>
   </header>
 
