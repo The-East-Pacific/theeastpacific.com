@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap');
 
 :root {
   --tep-green:       #1A6F34;
@@ -10,6 +10,11 @@
   --tep-light:       #F2F2F0;
   --tep-muted:       #B8B0B6;
   --tep-dim:         #7A7077;
+  
+  /* Font families */
+  --font-body:    'Sora', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-alt:     'Space Grotesk', 'Inter', system-ui, sans-serif;
 }
 
 /* ===== Dark theme (default) ===== */
