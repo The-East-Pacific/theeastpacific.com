@@ -1,15 +1,19 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
-    author: z.string(),
-    excerpt: z.string().optional(),
-    discourseUrl: z.string().url(),
-    discourseId: z.number(),
+    // add other fields your posts use, e.g.:
+    // date: z.date(),
+    // description: z.string().optional(),
   }),
 });
 
-export const collections = { blog };
+const docs = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/docs' }),
+  schema: z.object({}),
+});
+
+export const collections = { blog, docs };
