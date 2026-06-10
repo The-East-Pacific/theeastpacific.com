@@ -1,0 +1,173 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-mark">TEP</span>
+      <p class="footer-tagline">
+        The world's longest-running democratic NationStates region.
+      </p>
+    </div>
+    
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="https://tep.one">Community</a>
+        <a href="https://forum.theeastpacific.com">Forum</a>
+        <a href="https://tep.li/discord">Discord</a>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="/blog/">Blog</a>
+        <a href="https://forum.theeastpacific.com/c/community/administrative-announcements/34">Announcements</a>
+        <a href="https://www.nationstates.net/">NationStates</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>© {year} The East Pacific. All rights reserved.</p>
+    <p class="footer-meta">Built with Astro & Starlight</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--tep-dark-deep);
+    border-top: 1px solid rgba(242, 242, 240, 0.08);
+    margin-top: 4rem;
+  }
+  
+  :global([data-theme='light']) .site-footer {
+    background: #efece4;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+  }
+  
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .footer-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--tep-yellow);
+    color: var(--tep-dark-deep);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  
+  .footer-tagline {
+    color: var(--tep-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 280px;
+  }
+  
+  :global([data-theme='light']) .footer-tagline {
+    color: #4a4046;
+  }
+  
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--tep-light);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem 0;
+  }
+  
+  :global([data-theme='light']) .footer-col h4 {
+    color: #1a1418;
+  }
+  
+  .footer-col a {
+    display: block;
+    color: var(--tep-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+  }
+  
+  .footer-col a:hover {
+    color: var(--tep-yellow);
+  }
+  
+  :global([data-theme='light']) .footer-col a {
+    color: #4a4046;
+  }
+  
+  :global([data-theme='light']) .footer-col a:hover {
+    color: var(--tep-green);
+  }
+  
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(242, 242, 240, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  :global([data-theme='light']) .footer-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .footer-bottom p {
+    color: var(--tep-dim);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  
+  .footer-meta {
+    opacity: 0.7;
+  }
+  
+  @media (max-width: 640px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 1rem 1rem;
+    }
+    
+    .footer-links {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .footer-bottom {
+      padding: 1rem;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
