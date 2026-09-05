@@ -6,10 +6,20 @@ function formatDate(value) {
   if (!value) return '';
   const d = value instanceof Date ? value : new Date(value);
   if (isNaN(d)) return String(value);
+  // Dates in post frontmatter are date-only, parsed as UTC midnight — format in
+  // UTC so they never shift a day in any timezone.
   return d.toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric'
+    year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
   });
 }
+
+const replies = frontmatter.replies ?? 0;
+const discussionLabel =
+  replies === 0
+    ? 'No replies yet — start the discussion'
+    : replies === 1
+      ? '1 reply on the forum'
+      : `${replies} replies on the forum`;
 ---
 <article class="blog-post">
   <header class="post-header">
@@ -25,6 +35,31 @@ function formatDate(value) {
     <slot />
   </div>
 
+  {frontmatter.discourseUrl && (
+    <section class="post-discussion">
+      <div class="discussion-count">
+        <svg class="discussion-icon" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M8 1.5c-3.6 0-6.5 2.4-6.5 5.5 0 1.7.9 3.2 2.3 4.2-.1.9-.5 1.8-1.2 2.6 1.3-.2 2.4-.7 3.3-1.4.7.2 1.4.3 2.1.3 3.6 0 6.5-2.5 6.5-5.7S11.6 1.5 8 1.5z"
+          />
+        </svg>
+        <div class="discussion-text">
+          <strong>{discussionLabel}</strong>
+          <span class="discussion-hint">Comments live on the TEP Forum</span>
+        </div>
+      </div>
+      <a
+        class="discussion-btn"
+        href={frontmatter.discourseUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Join the discussion
+        <span class="discussion-ext" aria-hidden="true">↗</span>
+      </a>
+    </section>
+  )}
 </article>
 
 <style>
@@ -86,5 +121,83 @@ function formatDate(value) {
   }
   .post-content :global(a):hover {
     color: var(--tep-yellow);
+  }
+  .post-discussion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(242, 242, 240, 0.1);
+    border-radius: 14px;
+    background: rgba(242, 242, 240, 0.03);
+  }
+  :global([data-theme='light']) .post-discussion {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.02);
+  }
+  .discussion-count {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+  .discussion-icon {
+    flex-shrink: 0;
+    color: var(--tep-teal);
+  }
+  :global([data-theme='light']) .discussion-icon { color: var(--tep-green); }
+  .discussion-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .discussion-text strong {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--tep-light);
+  }
+  :global([data-theme='light']) .discussion-text strong { color: #1a1418; }
+  .discussion-hint {
+    font-size: 0.8rem;
+    color: var(--tep-dim);
+  }
+  .discussion-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--tep-yellow);
+    background: transparent;
+    color: var(--tep-yellow);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .discussion-btn:hover {
+    background: var(--tep-yellow);
+    color: #1a1418;
+  }
+  :global([data-theme='light']) .discussion-btn {
+    border-color: var(--tep-green);
+    color: var(--tep-green);
+  }
+  :global([data-theme='light']) .discussion-btn:hover {
+    background: var(--tep-green);
+    color: #ffffff;
+  }
+  .discussion-ext { font-size: 0.8rem; }
+  @media (max-width: 560px) {
+    .post-discussion {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>
