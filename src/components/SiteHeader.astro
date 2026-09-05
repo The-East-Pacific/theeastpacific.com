@@ -1,13 +1,7 @@
 ---
-const { currentPath = Astro.url.pathname } = Astro.props;
+import { siteNav, isNavActive } from '../data/site';
 
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/blog/', label: 'Blog' },
-  { href: 'https://tep.li/discord', label: 'Discord', external: true },
-  { href: 'https://forum.theeastpacific.com', label: 'Forum', external: true },
-  { href: 'https://tep.one', label: 'Community', external: true },
-];
+const { currentPath = Astro.url.pathname } = Astro.props;
 ---
 
 <header class="site-header">
@@ -18,14 +12,10 @@ const navLinks = [
     </a>
     
     <nav class="site-nav">
-      {navLinks.map(link => (
+      {siteNav.map(link => (
         <a 
           href={link.href} 
-          class={`nav-link ${
-            link.href === '/'
-              ? currentPath === link.href ? 'active' : ''
-              : currentPath.startsWith(link.href) ? 'active' : ''
-          }`}
+          class={`nav-link ${isNavActive(currentPath, link) ? 'active' : ''}`}
           {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
         >
           {link.label}

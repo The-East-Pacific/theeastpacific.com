@@ -17,13 +17,14 @@ export default defineConfig({
       favicon: '/favicon.ico',
       customCss: ['./src/styles/custom.css'],
       components: {
-        Footer: './src/components/Footer.astro',
+        Header: './src/components/Header.astro',
+        Footer: './src/components/SiteFooter.astro',
       },
       social: {
         discord: 'https://discord.com/channels/633351482128728064',
       },
       editLink: {
-        baseUrl: 'https://github.com/the-east-pacific/tepworlds/edit/main/',
+        baseUrl: 'https://github.com/The-East-Pacific/theeastpacific.com/edit/main/',
       },
       sidebar: [
         {
