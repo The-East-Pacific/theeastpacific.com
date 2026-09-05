@@ -4,6 +4,7 @@ date: "2020-09-12"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-ban-of-vultuca/13893"
 discourseId: 13893
+replies: 0
 excerpt: "By decision of TEP Administration, the user Vult, who also goes by the alias Moonman, Deus Vult and Vultuca has been banned from The East Pacific and all of its associated servers on discord for a dur"
 ---
 

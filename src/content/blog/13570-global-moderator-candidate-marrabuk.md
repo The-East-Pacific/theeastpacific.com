@@ -4,6 +4,7 @@ date: "2020-06-30"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/global-moderator-candidate-marrabuk/13570"
 discourseId: 13570
+replies: 3
 excerpt: "Hello!\nThe East Pacific Forum Administration would like to notify the community that we have selected [mention]Marrabuk[/mention] to fill a Global Moderator role. Should anyone have any legitimate con"
 ---
 

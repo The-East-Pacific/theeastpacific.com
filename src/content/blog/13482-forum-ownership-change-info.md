@@ -4,6 +4,7 @@ date: "2020-06-12"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/forum-ownership-change-info/13482"
 discourseId: 13482
+replies: 4
 excerpt: "As of 6/11/2020 I have transferred my ownership of the forum to [mention]nonprofit[/mention] , an account owned by The East Pacific Community Corporation, which is a nonprofit that has been created th"
 ---
 

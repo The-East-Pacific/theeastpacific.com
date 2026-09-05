@@ -4,6 +4,7 @@ date: "2019-05-02"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/tepwiki-the-east-pacific-encyclopedia/12539"
 discourseId: 12539
+replies: 0
 excerpt: "\nhttps://tep.miraheze.org/wiki/Main_Page or https://pacifi.ch/wiki\nHello all! I would like to introduce everyone to a side project that started in our roleplay community when NSWiki was out of service"
 ---
 

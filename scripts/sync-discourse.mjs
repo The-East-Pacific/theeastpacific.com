@@ -34,7 +34,7 @@ function cleanContent(html) {
   return cleaned;
 }
 
-function toFrontmatter(data) {
+function toFrontmatter(data, meta = {}) {
   const post = data.post_stream.posts[0];
   if (!post?.created_at) {
     throw new Error(`Topic ${data.id} has no created_at — skipping`);
@@ -49,6 +49,9 @@ function toFrontmatter(data) {
     author: post.username,
     discourseUrl: `${DISCOURSE_BASE}/t/${data.slug}/${data.id}`,
     discourseId: data.id,
+    // The forum's "Replies" column shows posts_count - 1 (total posts minus the
+    // opening post); reply_count counts something stricter and under-reports.
+    replies: Number.isInteger(meta.posts_count) ? Math.max(0, meta.posts_count - 1) : 0,
     excerpt: cleanedContent.replace(/<[^>]+>/g, '').slice(0, 200),
   };
 
@@ -90,7 +93,7 @@ async function sync() {
     try {
       const data = await fetchTopic(topic.id);
       const slug = `${data.id}-${data.slug}`;
-      const content = toFrontmatter(data);
+      const content = toFrontmatter(data, topic);
       await fs.writeFile(path.join(OUT_DIR, `${slug}.md`), content, 'utf8');
       console.log('Wrote', slug);
     } catch (err) {

@@ -4,6 +4,7 @@ date: "2018-08-30"
 author: "hobbes"
 discourseUrl: "https://forum.theeastpacific.com/t/board-rule-changes/6690"
 discourseId: 6690
+replies: 7
 excerpt: "Please review the following rule changes, specifically the amending of Offsite Links to all Offsite “Material” that is linked on the forum and the enforcement on\n— Begin quote from ____\nOffsite Materi"
 ---
 

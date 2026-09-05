@@ -4,6 +4,7 @@ date: "2021-01-08"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-ruling-over-recent-evidence-regarding-katiebirb/14251"
 discourseId: 14251
+replies: 0
 excerpt: "The Administrative Team of The East Pacific, having received evidence regarding katiebirb, Wintermoot, and Altino on January 8th 2021, has issued a ruling on the following:\n\n\nKatiebirb is to be perman"
 ---
 

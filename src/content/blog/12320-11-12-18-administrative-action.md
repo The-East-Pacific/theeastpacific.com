@@ -4,6 +4,7 @@ date: "2018-11-13"
 author: "hobbes"
 discourseUrl: "https://forum.theeastpacific.com/t/11-12-18-administrative-action/12320"
 discourseId: 12320
+replies: 1
 excerpt: "Yuno has been banned from The East Pacific in part for failing to take action while aware of the pertinent details of the Sara situation for an unknown period of time and for running a Discord server "
 ---
 

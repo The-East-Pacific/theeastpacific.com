@@ -4,6 +4,7 @@ date: "2020-01-22"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/fortuna-ban-reversal/13022"
 discourseId: 13022
+replies: 0
 excerpt: "Fortuna’s ban has been reversed. Currently The East Pacific Administration Team has been actively been re-investigating the bans of Drachen, Fortuna, Succ and Yuno after certain information reached us"
 ---
 

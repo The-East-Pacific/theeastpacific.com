@@ -4,6 +4,7 @@ date: "2020-10-11"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-ban-of-rufuina/14014"
 discourseId: 14014
+replies: 0
 excerpt: "Boundedsleet (Rufuina) has been permanently banned from The East Pacific for consistent disrespectful and violent language on the roleplay Discord server. On several occasions, Boundedsleet has spoken"
 ---
 

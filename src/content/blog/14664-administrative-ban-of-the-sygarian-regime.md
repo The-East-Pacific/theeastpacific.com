@@ -4,6 +4,7 @@ date: "2021-05-15"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-ban-of-the-sygarian-regime/14664"
 discourseId: 14664
+replies: 0
 excerpt: "Administrative Ban of The Sygarian Regime\nOn 05/11/2021 The Sygarian Regime was temporarily banned from The East Pacific Roleplay server due to a video that was posted that in the voice chat text chan"
 ---
 

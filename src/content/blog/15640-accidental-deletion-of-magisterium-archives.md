@@ -4,6 +4,7 @@ date: "2022-09-06"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/accidental-deletion-of-magisterium-archives/15640"
 discourseId: 15640
+replies: 0
 excerpt: "A few days ago as I was trying to track down a shadow topic issue in the Archives: Magisterium subforum of Capitol Records, I mistakenly deleted the subforum and its subforums. This included the 2014 "
 ---
 

@@ -4,6 +4,7 @@ date: "2026-08-13"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/community-renewal-2026/20009"
 discourseId: 20009
+replies: 1
 excerpt: "Community Renewal Starting Points\n\nTEP Community Renewal\nChannel Merger Previewer\nFeedback Form\nDiscord Post\nResults\n"
 ---
 

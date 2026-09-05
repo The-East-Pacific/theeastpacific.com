@@ -4,6 +4,7 @@ date: "2020-03-17"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/amended-ban-statements-for-drachen-succ-and-yuno/13159"
 discourseId: 13159
+replies: 0
 excerpt: "After a careful and lengthy review of all credible, hard evidence, the TEP Administrative Team has made revisions to a series of bans carried out in November of 2018. These bans concern the users Yuno"
 ---
 

@@ -4,6 +4,7 @@ date: "2018-03-29"
 author: "Todd_McCloud"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-actions/6695"
 discourseId: 6695
+replies: 33
 excerpt: "This thread is intended to develop greater transparency between TEP forum administration / moderation and the region at large. This is something we intend to change - we, being the administrative and "
 ---
 

@@ -4,6 +4,7 @@ date: "2020-03-31"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/community-advisory-politics-and-war/13190"
 discourseId: 13190
+replies: 0
 excerpt: "The Administrative Team of The East Pacific releases the following statement concerning the safety and general well-being to users that may play the unaffiliated Politics &amp; War (PnW / PW / P&amp;W"
 ---
 

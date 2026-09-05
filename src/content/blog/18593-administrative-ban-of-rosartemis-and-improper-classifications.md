@@ -4,6 +4,7 @@ date: "2024-12-27"
 author: "Zukchiva"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-ban-of-rosartemis-and-improper-classifications/18593"
 discourseId: 18593
+replies: 0
 excerpt: "After a review of the facts of each case, the Administrative Team declares that Rosartemis and Improper Classifications have been banned from the East Pacific for a period of approximately 6 months - "
 ---
 

@@ -4,6 +4,7 @@ date: "2021-09-19"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-announcement-vultucas-case-rp-server/14956"
 discourseId: 14956
+replies: 0
 excerpt: "The Administrative Team of The East Pacific, after thoughtful deliberations and a review of the evidence from at hand (between 13th and 16th of September 2021) and the OOC Panel being held (between 16"
 ---
 

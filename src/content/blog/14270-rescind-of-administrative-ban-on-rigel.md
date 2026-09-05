@@ -4,6 +4,7 @@ date: "2021-01-13"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/rescind-of-administrative-ban-on-rigel/14270"
 discourseId: 14270
+replies: 0
 excerpt: "After receiving a compelling explanation, The East Pacific Administrative Team has rescinded Rigel’s ban from all regional platforms. It was conveyed to us that Rigel had blocked Katiebirb after reply"
 ---
 

@@ -1,6 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
 
+interface Props {
+  /** 'cards' = homepage card grid; 'feed' = forum-style topic list */
+  variant?: 'cards' | 'feed';
+  /** Max posts to show; undefined = all */
+  limit?: number;
+}
+const { variant = 'cards', limit } = Astro.props;
+
+// Cards (homepage) default to the 10 newest; the forum-style feed lists everything
+const maxPosts = limit ?? (variant === 'feed' ? undefined : 10);
+
 const allPosts = await getCollection('blog');
 const posts = allPosts
   .filter(post => post.data.date || post.data.pubDate) // Skip posts without dates
@@ -9,22 +20,90 @@ const posts = allPosts
     const dateB = new Date(b.data.date || b.data.pubDate).getTime();
     return dateB - dateA;
   })
-  .slice(0, 10);
+  .slice(0, maxPosts ?? Infinity);
 
 function formatDate(value) {
   if (!value) return '';
   try {
     const d = value instanceof Date ? value : new Date(value);
     if (isNaN(d.getTime())) return '';
+    // Dates in post frontmatter are date-only ("2026-08-13"), parsed as UTC
+    // midnight — format in UTC so they never shift a day in any timezone.
     return d.toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric'
+      year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
     });
   } catch {
     return '';
   }
 }
+
+function replyLabel(count) {
+  return count === 1 ? '1 reply' : `${count} replies`;
+}
 ---
-{posts.length === 0 ? (
+
+{/* Forum-style feed — used on the /blog/ listing page */}
+{variant === 'feed' && posts.length > 0 && (
+  <div class="feed">
+    <div class="feed-head">
+      <span class="feed-col-topic">Topic</span>
+      <span class="feed-col-replies">Replies</span>
+    </div>
+    <ul class="feed-list">
+      {posts.map(post => {
+        const replies = post.data.replies ?? 0;
+        return (
+          <li class="feed-item">
+            <div class="feed-main">
+              <a
+                class="feed-title"
+                href={`/blog/${post.id.replace(/\.md$/, '')}/`}
+              >
+                {post.data.title}
+              </a>
+              <div class="feed-meta">
+                <span>by {post.data.author || 'TEP'}</span>
+                <span class="feed-meta-sep">·</span>
+                <span>{formatDate(post.data.date)}</span>
+              </div>
+            </div>
+            {post.data.discourseUrl ? (
+              <a
+                class="feed-replies"
+                href={post.data.discourseUrl}
+                title={`${replyLabel(replies)} on the forum — view topic`}
+              >
+                <svg
+                  class="feed-reply-icon"
+                  viewBox="0 0 16 16"
+                  width="14"
+                  height="14"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M8 1.5c-3.6 0-6.5 2.4-6.5 5.5 0 1.7.9 3.2 2.3 4.2-.1.9-.5 1.8-1.2 2.6 1.3-.2 2.4-.7 3.3-1.4.7.2 1.4.3 2.1.3 3.6 0 6.5-2.5 6.5-5.7S11.6 1.5 8 1.5z"
+                  />
+                </svg>
+                <span class="feed-reply-count">{replies}</span>
+              </a>
+            ) : (
+              <span class="feed-replies feed-replies-static">
+                <svg class="feed-reply-icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                  <path fill="currentColor" d="M8 1.5c-3.6 0-6.5 2.4-6.5 5.5 0 1.7.9 3.2 2.3 4.2-.1.9-.5 1.8-1.2 2.6 1.3-.2 2.4-.7 3.3-1.4.7.2 1.4.3 2.1.3 3.6 0 6.5-2.5 6.5-5.7S11.6 1.5 8 1.5z"/>
+                </svg>
+                <span class="feed-reply-count">{replies}</span>
+              </span>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+)}
+
+{/* Card feed — used on the homepage */}
+{variant === 'cards' && (posts.length === 0 ? (
   <p class="empty">No blog posts yet. Check back soon!</p>
 ) : (
   <ul class="post-list">
@@ -45,7 +124,7 @@ function formatDate(value) {
       </li>
     ))}
   </ul>
-)}
+))}
 
 <style>
   .empty {
@@ -123,4 +202,112 @@ function formatDate(value) {
     font-weight: 500;
   }
   :global([data-theme='light']) .post-cta { color: var(--tep-green); }
+
+  /* ---- Forum-style feed (used on /blog/) ---- */
+  .feed {
+    border: 1px solid rgba(242, 242, 240, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    font-family: var(--font-body);
+  }
+  :global([data-theme='light']) .feed {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  .feed-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1.1rem;
+    background: rgba(242, 242, 240, 0.04);
+    border-bottom: 1px solid rgba(242, 242, 240, 0.08);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tep-dim);
+  }
+  :global([data-theme='light']) .feed-head {
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .feed-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .feed-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 1px solid rgba(242, 242, 240, 0.06);
+    transition: background 0.2s ease;
+  }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-item:hover { background: rgba(242, 242, 240, 0.04); }
+  :global([data-theme='light']) .feed-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  :global([data-theme='light']) .feed-item:hover { background: rgba(0, 0, 0, 0.03); }
+  .feed-main {
+    min-width: 0;
+  }
+  .feed-title {
+    display: block;
+    color: var(--tep-light);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+  .feed-title:hover { color: var(--tep-yellow); }
+  :global([data-theme='light']) .feed-title { color: #1a1418; }
+  :global([data-theme='light']) .feed-title:hover { color: var(--tep-green); }
+  .feed-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--tep-dim);
+  }
+  .feed-meta-sep { opacity: 0.6; }
+  .feed-replies {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(242, 242, 240, 0.06);
+    border: 1px solid rgba(242, 242, 240, 0.1);
+    color: var(--tep-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  a.feed-replies:hover {
+    color: var(--tep-yellow);
+    border-color: var(--tep-yellow);
+    background: rgba(234, 211, 42, 0.08);
+  }
+  :global([data-theme='light']) .feed-replies {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #4a4a4a;
+  }
+  :global([data-theme='light']) a.feed-replies:hover {
+    color: var(--tep-green);
+    border-color: var(--tep-green);
+    background: rgba(46, 125, 91, 0.08);
+  }
+  .feed-reply-icon { opacity: 0.8; }
+  .feed-reply-count { font-variant-numeric: tabular-nums; }
+  .feed-replies-static { cursor: default; }
 </style>

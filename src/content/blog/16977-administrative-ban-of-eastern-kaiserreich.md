@@ -4,6 +4,7 @@ date: "2023-05-29"
 author: "system"
 discourseUrl: "https://forum.theeastpacific.com/t/administrative-ban-of-eastern-kaiserreich/16977"
 discourseId: 16977
+replies: 0
 excerpt: "A harassment case against Eastern Kaiserreich (EK for short) was brought to the attention of TEP’s administration and moderation team. During the investigations, we uncovered an incident where EK made"
 ---
 

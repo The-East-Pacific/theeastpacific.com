@@ -4,6 +4,7 @@ date: "2019-05-08"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/global-moderator-candidate/12548"
 discourseId: 12548
+replies: 7
 excerpt: "Hello all!\nI would like to let everyone know that we have selected [mention]McStooley[/mention] to replace Cain as Global Moderator. As we seek out different ways to better serve you, having an active"
 ---
 

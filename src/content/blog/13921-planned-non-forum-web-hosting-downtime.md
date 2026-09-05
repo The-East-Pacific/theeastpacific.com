@@ -4,6 +4,7 @@ date: "2020-09-23"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/planned-non-forum-web-hosting-downtime/13921"
 discourseId: 13921
+replies: 0
 excerpt: "Hello people!\nThis weekend, I will be moving my hosting account from a shared server to a semi-dedicated server, which will cause some TEP services to be effected.\nI will be disconnecting them from th"
 ---
 

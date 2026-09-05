@@ -4,6 +4,7 @@ date: "2020-10-06"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/formation-of-community-and-forum-teams/13994"
 discourseId: 13994
+replies: 1
 excerpt: "Greeting TEP!\nWe have some great changes coming your way! And some of those changes will happen over the next few days. We are going to do a restructure of how TEP’s administration and moderation oper"
 ---
 

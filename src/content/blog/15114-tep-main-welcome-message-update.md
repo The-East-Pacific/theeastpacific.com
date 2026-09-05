@@ -4,6 +4,7 @@ date: "2021-12-12"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/tep-main-welcome-message-update/15114"
 discourseId: 15114
+replies: 2
 excerpt: "PROPOSED SERVER CHANGE #Maintenance Update: Updating entry message and /verify command.\nIs this an emergency change?\nNo\nWhat is being changed?\nThe welcome message and corresponding /verify command\nWhy"
 ---
 

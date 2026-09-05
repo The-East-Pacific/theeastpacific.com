@@ -4,6 +4,7 @@ date: "2024-11-21"
 author: "Libertanny"
 discourseUrl: "https://forum.theeastpacific.com/t/announcement-on-community-wide-bans-of-empire-of-dabiristan-new-westmore-great-slatos-lointland-wiranath-karatol-advenra-and-rajyam/18532"
 discourseId: 18532
+replies: 0
 excerpt: "The Regional Administrative Office, made up of RMB Moderators and tasked with the goal of enforcing community rules in RMB community spaces, has become aware of the numerous and flagrant violations of"
 ---
 

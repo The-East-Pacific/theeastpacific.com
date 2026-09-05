@@ -4,6 +4,7 @@ date: "2018-10-28"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/administrator-and-global-moderator-candidates/12305"
 discourseId: 12305
+replies: 8
 excerpt: "Hello once again!\nI would like to let everyone know that we have selected two current members of forum staff for promotion to fill a Administrator and Global Moderator position. As we seek out differe"
 ---
 

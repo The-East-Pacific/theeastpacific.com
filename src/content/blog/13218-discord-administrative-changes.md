@@ -4,6 +4,7 @@ date: "2020-04-14"
 author: "Emjay"
 discourseUrl: "https://forum.theeastpacific.com/t/discord-administrative-changes/13218"
 discourseId: 13218
+replies: 0
 excerpt: "As an administrative decision, effectively immediately, all official TEP Discord servers shall be owned by a TEP Forum Admin. Any server not under their (the Administrators and Global Moderators liste"
 ---
 
