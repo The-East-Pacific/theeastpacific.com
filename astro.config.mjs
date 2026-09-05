@@ -32,9 +32,8 @@ export default defineConfig({
             // points to src/content/docs/index.mdx
             { label: 'Home', link: '/' },
             
-            // Autogenerate from src/content/docs/blog/
-            // Create src/content/docs/blog/ and add at least one .md file
-            { label: 'Blog', autogenerate: { directory: 'blog' } },
+            // points to src/content/docs/blog.mdx
+            { label: 'Blog', link: '/blog/' },
           ],
         },
       ],

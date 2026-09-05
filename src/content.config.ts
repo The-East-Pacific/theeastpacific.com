@@ -16,6 +16,8 @@ export const collections = {
       date: z.coerce.date().optional(),
       pubDate: z.coerce.date().optional(),
       discourseUrl: z.string().optional(),
+      discourseId: z.number().optional(),
+      excerpt: z.string().optional(),
     }),
   }),
 };

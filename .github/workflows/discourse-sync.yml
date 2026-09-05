@@ -19,7 +19,7 @@ jobs:
           node-version: '20'
 
       - name: Sync Discourse posts
-        run: node scripts/sync-discourse.js
+        run: node scripts/sync-discourse.mjs
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:

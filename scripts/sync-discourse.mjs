@@ -59,16 +59,47 @@ function toFrontmatter(data) {
   return `---\n${fmYaml}\n---\n\n${cleanedContent}\n`;
 }
 
-async function sync(ids) {
+const CATEGORY_SLUG = 'community/administrative-announcements';
+const CATEGORY_ID = 34;
+
+async function fetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${url} (${res.status})`);
+  return res.json();
+}
+
+/**
+ * Fetch the latest topics in the Administrative Announcements category.
+ * Returns them newest-first by topic id.
+ */
+async function listTopics() {
+  const data = await fetchJson(
+    `${DISCOURSE_BASE}/c/${CATEGORY_SLUG}/${CATEGORY_ID}.json`
+  );
+  const topics = data.topic_list?.topics ?? [];
+  return topics
+    .filter((t) => t.id && t.slug)
+    .sort((a, b) => b.id - a.id);
+}
+
+async function sync() {
   await fs.mkdir(OUT_DIR, { recursive: true });
-  for (const id of ids) {
-    const data = await fetchTopic(id);
-    const slug = `${id}-${data.slug}`;
-    const content = toFrontmatter(data);
-    await fs.writeFile(path.join(OUT_DIR, `${slug}.md`), content, 'utf8');
-    console.log('Wrote', slug);
+  const topics = await listTopics();
+  console.log(`Found ${topics.length} topics in category ${CATEGORY_ID}`);
+  for (const topic of topics) {
+    try {
+      const data = await fetchTopic(topic.id);
+      const slug = `${data.id}-${data.slug}`;
+      const content = toFrontmatter(data);
+      await fs.writeFile(path.join(OUT_DIR, `${slug}.md`), content, 'utf8');
+      console.log('Wrote', slug);
+    } catch (err) {
+      console.error(`Skipping topic ${topic.id}: ${err.message}`);
+    }
   }
 }
 
-// Example: sync the topics you care about
-sync([12281]);
+sync().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
