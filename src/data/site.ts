@@ -12,9 +12,10 @@ export interface SiteNavLink {
 export const siteNav: SiteNavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/blog/', label: 'Blog' },
-  { href: 'https://tep.li/discord', label: 'Discord', external: true },
   { href: 'https://forum.theeastpacific.com', label: 'Forum', external: true },
   { href: 'https://tep.one', label: 'Community', external: true },
+  // Discord is intentionally absent: it's already available as an icon
+  // next to the search bar on docs pages, and as a footer link everywhere.
 ];
 
 /** Returns whether a nav link should render as active for the given path. */

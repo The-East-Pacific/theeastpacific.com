@@ -17,7 +17,6 @@ const { currentPath = Astro.url.pathname } = Astro.props;
           {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
         >
           {link.label}
-          {link.external && <span class="external-icon">↗</span>}
         </a>
       ))}
     </nav>
@@ -86,14 +85,7 @@ const { currentPath = Astro.url.pathname } = Astro.props;
   .nav-link.active {
     color: var(--tep-yellow);
     background: rgba(245, 228, 35, 0.1);
-  }
-  
-  .external-icon {
-    font-size: 0.75rem;
-    opacity: 0.6;
-  }
-  
-  @media (max-width: 640px) {
+  }  @media (max-width: 640px) {
     .header-inner {
       padding: 0.75rem 1rem;
       flex-direction: column;

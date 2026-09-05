@@ -29,7 +29,6 @@ const currentPath = Astro.url.pathname;
 					{...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
 				>
 					{link.label}
-					{link.external && <span class="external-icon">↗</span>}
 				</a>
 			))}
 		</nav>
@@ -107,11 +106,6 @@ const currentPath = Astro.url.pathname;
 
 	.nav-link.active {
 		color: var(--sl-color-text-accent);
-	}
-
-	.external-icon {
-		font-size: 0.75rem;
-		opacity: 0.6;
 	}
 
 	/* The docs sidebar menu handles navigation on small and medium screens. */
