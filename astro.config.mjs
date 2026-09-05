@@ -8,7 +8,7 @@ export default defineConfig({
   base: '',
   integrations: [
     starlight({
-      title: 'TEP',
+      title: 'Urth, Valsora, The East Pacific',
       description: 'News, announcements, and stories from Urth, Valsora, The East Pacific.',
       logo: {
         src: './src/assets/logo.svg',
