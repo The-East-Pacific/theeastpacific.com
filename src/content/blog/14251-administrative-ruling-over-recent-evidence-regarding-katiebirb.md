@@ -24,4 +24,4 @@ excerpt: "The Administrative Team of The East Pacific, having received evidence 
 </li>
 </ol>
 <p>Any evidence about the aforementioned situation will be available to administrative teams that have questions as to the situation at hand.</p>
-<p>This has been updated <a href="https://www.tapatalk.com/groups/the_east_pacific/rescind-of-administrative-ban-on-rigel-t18049.html" class="inline-onebox">Rescind of Administrative Ban on Rigel - The East Pacific - Tapatalk</a></p>
+<p>This has been updated <a href="https://www.tapatalk.com/groups/the_east_pacific/rescind-of-administrative-ban-on-rigel-t18049.html">https://www.tapatalk.com/groups/the_east_pacific/rescind-of-administrative-ban-on-rigel-t18049.html</a></p>
