@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&family=League+Spartan:wght@400;500;700;900&family=Sora:wght@400;500;600;700;800&display=swap');
 
 :root {
+  /* Brand palette — kept in sync with the forum (clover light/dark schemes):
+     primary #281f24, secondary #ffffff, tertiary #1a6f34,
+     header_background #f2f2f0, highlight #f5e423, banner link #6ea7a1 */
   --tep-green:       #1A6F34;
   --tep-green-light: #2A8C4A;
   --tep-yellow:      #F5E423;
   --tep-teal:        #6EA7A1;
   --tep-dark:        #281F24;
-  --tep-dark-deep:   #1a1418;
+  --tep-dark-deep:   #1a1a1a;
   --tep-light:       #F2F2F0;
   --tep-muted:       #B8B0B6;
   --tep-dim:         #7A7077;
@@ -18,13 +21,13 @@
 }
 
 :root {
-  --sl-color-accent-low:    #4a4410;
+  --sl-color-accent-low:    #363102;
   --sl-color-accent:        var(--tep-yellow);
-  --sl-color-accent-high:   #f8ee5e;
+  --sl-color-accent-high:   #f1de0b;
   --sl-color-bg:            var(--tep-dark);
-  --sl-color-bg-nav:        rgba(40, 31, 36, 0.8);
+  --sl-color-bg-nav:        rgba(26, 26, 26, 0.85);
   --sl-color-bg-sidebar:    var(--tep-dark-deep);
-  --sl-color-bg-inline-code:#3D3340;
+  --sl-color-bg-inline-code:#3a3a3a;
   --sl-color-bg-accent:     rgba(245, 228, 35, 0.12);
   --sl-color-white:         var(--tep-light);
   --sl-color-gray-1:        #D8D2D6;
@@ -38,21 +41,21 @@
 }
 
 :root[data-theme='light'] {
-  --sl-color-accent-low:    #fff8b8;
+  --sl-color-accent-low:    #fcf7bd;
   --sl-color-accent:        #c8b91e;
-  --sl-color-accent-high:   #8a7e0d;
-  --sl-color-white:         #1a1418;
-  --sl-color-bg:            #f8f6f0;
-  --sl-color-bg-nav:        rgba(248, 246, 240, 0.9);
-  --sl-color-bg-sidebar:    #efece4;
-  --sl-color-bg-inline-code:#e8e4d8;
+  --sl-color-accent-high:   #867c06;
+  --sl-color-white:         #281f24;
+  --sl-color-bg:            #ffffff;
+  --sl-color-bg-nav:        rgba(242, 242, 240, 0.9);
+  --sl-color-bg-sidebar:    #f2f2f0;
+  --sl-color-bg-inline-code:#f4f0f2;
   --sl-color-bg-accent:     rgba(26, 111, 52, 0.12);
   --sl-color-gray-1:        #2a2429;
   --sl-color-gray-2:        #4a4046;
   --sl-color-gray-3:        #6a6066;
   --sl-color-gray-5:        #d8d4cc;
   --sl-color-gray-6:        #c8c4bc;
-  --sl-color-black:         #1a1418;
+  --sl-color-black:         #281f24;
 }
 
 /* ===== MAIN SITE TITLES - Climate Crisis only ===== */
@@ -110,13 +113,15 @@
 }
 
 .sl-markdown-content a:not(:hover) { color: var(--tep-teal); }
+/* Forum links use tertiary green (#1a6f34) on light backgrounds */
+:root[data-theme='light'] .sl-markdown-content a:not(:hover) { color: var(--tep-green); }
 nav.sl-nav {
-  background: rgba(40, 31, 36, 0.7);
+  background: rgba(26, 26, 26, 0.7);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(242, 242, 240, 0.06);
 }
 :root[data-theme='light'] nav.sl-nav {
-  background: rgba(248, 246, 240, 0.8);
+  background: rgba(242, 242, 240, 0.85);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 .card {
@@ -143,7 +148,7 @@ nav.sl-nav {
 ::-webkit-scrollbar-track { background: var(--tep-dark-deep); }
 ::-webkit-scrollbar-thumb { background: #4a4046; border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--tep-yellow); }
-:root[data-theme='light'] ::-webkit-scrollbar-track { background: #e8e4d8; }
+:root[data-theme='light'] ::-webkit-scrollbar-track { background: #f4f0f2; }
 :root[data-theme='light'] ::-webkit-scrollbar-thumb { background: #b8b0a8; }
 ::selection { background: var(--tep-yellow); color: var(--tep-dark-deep); }
 :root[data-theme='light'] ::selection { background: var(--tep-green); color: white; }
@@ -152,10 +157,10 @@ nav.sl-nav {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
 }
 :root[data-theme='light'] .tep-footer {
-  background: #efece4 !important;
+  background: #f2f2f0 !important;
   border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
-:root[data-theme='light'] .tep-footer-brand { color: #1a1418 !important; }
+:root[data-theme='light'] .tep-footer-brand { color: #281f24 !important; }
 :root[data-theme='light'] .tep-footer-links a { color: #4a4046 !important; }
 :root[data-theme='light'] .tep-footer-links a:hover { color: var(--tep-green) !important; }
 :root[data-theme='light'] .tep-footer-copy { color: #6a6066 !important; }
@@ -165,8 +170,8 @@ nav.sl-nav {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
 }
 :root[data-theme='light'] .forum-feed li { border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important; }
-:root[data-theme='light'] .forum-feed li:hover { background: #f8f6f0 !important; }
-:root[data-theme='light'] .forum-feed a { color: #1a1418 !important; }
+:root[data-theme='light'] .forum-feed li:hover { background: #f2f2f0 !important; }
+:root[data-theme='light'] .forum-feed a { color: #281f24 !important; }
 :root[data-theme='light'] .forum-feed a:hover { color: var(--tep-green) !important; }
 :root[data-theme='light'] .forum-meta,
 :root[data-theme='light'] .forum-empty { color: #6a6066 !important; }
@@ -177,7 +182,7 @@ nav.sl-nav {
 :root[data-theme='light'] [class*='search'] button,
 :root[data-theme='light'] [class*='Search'] button {
   background: #ffffff !important;
-  color: #1a1418 !important;
+  color: #281f24 !important;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 .post-content {
@@ -188,7 +193,7 @@ nav.sl-nav {
   max-width: 720px;
   margin: 0 auto;
 }
-:root[data-theme='light'] .post-content { color: #1a1418; }
+:root[data-theme='light'] .post-content { color: #281f24; }
 .post-content p { margin: 1.25rem 0; }
 .post-content a:not(.discuss-link) {
   color: var(--tep-teal);
@@ -197,6 +202,8 @@ nav.sl-nav {
   text-underline-offset: 2px;
 }
 .post-content a:not(.discuss-link):hover { color: var(--tep-yellow); }
+:root[data-theme='light'] .post-content a:not(.discuss-link) { color: var(--tep-green); }
+:root[data-theme='light'] .post-content a:not(.discuss-link):hover { color: var(--tep-green-light); }
 .post-content p:has(a[href*="forum.theeastpacific.com"]) {
   display: inline-flex !important;
   align-items: center;
