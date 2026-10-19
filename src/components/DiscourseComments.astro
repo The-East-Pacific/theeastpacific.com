@@ -8,15 +8,12 @@
 // - discourseEmbedUrl: canonical page URL, Discourse auto-creates/finds the
 //   linked topic. Fallback for pages without a known topic id.
 //
-// NOTE: we deliberately use the classic topic embed (not the newer "full app
-// mode" from https://meta.discourse.org/t/399743). Full app renders a fixed
-// forum-styled app window that clashes with the site design; the classic
-// embed auto-sizes to the reply list and lets the page own the styling.
-// Sizing params below mirror the official demo
-// (https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/):
-// dynamic height bounded by min/max so the frame fits its content instead of
-// a rigid box. Revisit full app if the forum ships Embedded-CSS theming that
-// matches the site.
+// NOTE on rendering mode: the official demo
+// (https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/)
+// pairs "full app mode" (https://meta.discourse.org/t/399743 — interactive
+// reply/like/quote inside the page) with dynamic height bounds, and that is
+// what we mirror here. Full app alone in a rigid fixed-height box looks
+// wrong; dynamicHeight lets the frame fit its content between min and max.
 //
 // Requires Admin > Customize > Embedding on the forum to allow-list
 // `theeastpacific.com` as an Embeddable Host.
@@ -46,27 +43,22 @@ const {
   define:vars={{ discourseUrl, embedUrl, topicId, className }}
 >
   // Prefer topicId (existing topic) — otherwise fall back to embed URL mode.
-  // Height params mirror the official demo: the frame tracks content height
-  // within bounds instead of a rigid fixed-height box.
+  // fullApp + dynamic height bounds mirror the official demo exactly; the
+  // topicId (vs the demo's discourseEmbedUrl) only changes WHICH topic
+  // resolves, and keeps us from spawning duplicate topics for pages the
+  // forum already has. Requires the forum's `embed_full_app` toggle on.
+  var baseEmbed = {
+    discourseUrl: discourseUrl,
+    fullApp: true,
+    dynamicHeight: true,
+    embedMinHeight: '500',
+    embedMaxHeight: '1600',
+    embedHeight: '800px',
+    ...(className ? { className } : {}),
+  };
   window.DiscourseEmbed = Number.isInteger(topicId)
-    ? {
-        discourseUrl: discourseUrl,
-        topicId: topicId,
-        dynamicHeight: true,
-        embedMinHeight: '500',
-        embedMaxHeight: '1600',
-        embedHeight: '800px',
-        ...(className ? { className } : {}),
-      }
-    : {
-        discourseUrl: discourseUrl,
-        discourseEmbedUrl: embedUrl,
-        dynamicHeight: true,
-        embedMinHeight: '500',
-        embedMaxHeight: '1600',
-        embedHeight: '800px',
-        ...(className ? { className } : {}),
-      };
+    ? { ...baseEmbed, topicId: topicId }
+    : { ...baseEmbed, discourseEmbedUrl: embedUrl };
 
   (function () {
     var d = document.createElement('script');
