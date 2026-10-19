@@ -65,6 +65,10 @@ function toFrontmatter(data, meta = {}) {
 const CATEGORY_SLUG = 'community/administrative-announcements';
 const CATEGORY_ID = 34;
 
+// Topics that should never appear on the site, e.g. Discourse's
+// auto-generated "About this category" boilerplate topic.
+const EXCLUDED_TOPIC_IDS = new Set([15772]);
+
 async function fetchJson(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch ${url} (${res.status})`);
@@ -81,7 +85,7 @@ async function listTopics() {
   );
   const topics = data.topic_list?.topics ?? [];
   return topics
-    .filter((t) => t.id && t.slug)
+    .filter((t) => t.id && t.slug && !EXCLUDED_TOPIC_IDS.has(t.id))
     .sort((a, b) => b.id - a.id);
 }
 
@@ -121,7 +125,10 @@ async function sync() {
     const m = file.match(/^(\d+)-.*\.md$/);
     if (!m) continue;
     const id = m[1];
-    if (!validIds.has(id)) {
+    if (EXCLUDED_TOPIC_IDS.has(Number(id))) {
+      await fs.unlink(path.join(OUT_DIR, file));
+      console.log('Removed (excluded):', file);
+    } else if (!validIds.has(id)) {
       await fs.unlink(path.join(OUT_DIR, file));
       console.log('Removed (left category):', file);
     } else if (writtenById.has(id) && writtenById.get(id) !== file) {
