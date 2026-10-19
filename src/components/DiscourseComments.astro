@@ -1,6 +1,9 @@
 ---
-// Full Discourse comment embed per official spec:
-// https://meta.discourse.org/t/embed-discourse-comments-on-another-website-via-javascript/31963
+// Full Discourse comment embed per official specs:
+// - Classic embed: https://meta.discourse.org/t/embed-discourse-comments-on-another-website-via-javascript/31963
+// - Full app mode: https://meta.discourse.org/t/embed-discourse-as-a-full-comment-system-on-your-site/399743
+//   (`fullApp: true` loads the full Discourse UI in the iframe so visitors
+//   can reply, like, and quote without leaving the site.)
 //
 // Two modes (spec supports both):
 // - topicId: links embed to an EXISTING forum topic. Use this when the page
@@ -8,8 +11,9 @@
 // - discourseEmbedUrl: canonical page URL, Discourse auto-creates/finds the
 //   linked topic. Fallback for pages without a known topic id.
 //
-// Requires Admin > Customize > Embedding on the forum to allow-list
-// `theeastpacific.com` as an Embeddable Host.
+// Requires on the forum:
+// - Admin > Customize > Embedding allow-lists `theeastpacific.com`, and
+// - Admin > Advanced > Embedding enables full app mode (`embed_full_app`).
 interface Props {
   /** Existing Discourse topic id (preferred — shows current replies) */
   topicId?: number;
@@ -36,17 +40,18 @@ const {
   define:vars={{ discourseUrl, embedUrl, topicId, className }}
 >
   // Prefer topicId (existing topic) — otherwise fall back to embed URL mode.
+  // fullApp + embedHeight enable the interactive full-app embed (reply/like/
+  // quote inline) per https://meta.discourse.org/t/399743 — ignored by older
+  // embed.js, so this degrades gracefully to the classic read-only embed.
+  var baseEmbed = {
+    discourseUrl: discourseUrl,
+    fullApp: true,
+    embedHeight: '800px',
+    ...(className ? { className } : {}),
+  };
   window.DiscourseEmbed = Number.isInteger(topicId)
-    ? {
-        discourseUrl: discourseUrl,
-        topicId: topicId,
-        ...(className ? { className } : {}),
-      }
-    : {
-        discourseUrl: discourseUrl,
-        discourseEmbedUrl: embedUrl,
-        ...(className ? { className } : {}),
-      };
+    ? { ...baseEmbed, topicId: topicId }
+    : { ...baseEmbed, discourseEmbedUrl: embedUrl };
 
   (function () {
     var d = document.createElement('script');
