@@ -88,15 +88,25 @@ const { currentPath = Astro.url.pathname } = Astro.props;
   .nav-link.active {
     color: var(--tep-yellow);
     background: rgba(245, 228, 35, 0.1);
-  }  @media (max-width: 640px) {
+  }
+
+  :global([data-theme='light']) .nav-link.active {
+    color: var(--tep-green);
+    background: rgba(26, 111, 52, 0.1);
+  }
+
+  @media (max-width: 640px) {
     .header-inner {
       padding: 0.75rem 1rem;
-      flex-direction: column;
-      gap: 0.75rem;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
     }
-    
+
+    /* Brand left, toggle right on the first row; nav takes the full row below. */
     .site-nav {
-      width: 100%;
+      order: 3;
+      flex-basis: 100%;
       justify-content: center;
       flex-wrap: wrap;
     }

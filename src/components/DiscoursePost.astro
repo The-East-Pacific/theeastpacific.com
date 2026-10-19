@@ -21,6 +21,8 @@ function formatDate(value) {
     year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
   });
 }
+
+const replyCount = Number.isInteger(frontmatter?.replies) ? frontmatter.replies : 0;
 ---
 <article class="blog-post">
   <header class="post-header">
@@ -38,7 +40,23 @@ function formatDate(value) {
 
   {(topicId || embedUrl) && (
     <section class="post-comments" aria-label="Comments">
-      <DiscourseComments topicId={topicId} embedUrl={embedUrl} />
+      <div class="comments-head">
+        <h2>
+          Comments
+          {replyCount > 0 && <span class="comments-count">{replyCount}</span>}
+        </h2>
+        {frontmatter.discourseUrl && (
+          <a
+            class="comments-link"
+            href={frontmatter.discourseUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Continue on the forum <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+      <DiscourseComments topicId={topicId} embedUrl={embedUrl} className="tep-comments" />
     </section>
   )}
 </article>
@@ -116,6 +134,54 @@ function formatDate(value) {
   }
   :global([data-theme='light']) .post-comments {
     border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .comments-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .comments-head h2 {
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .comments-count {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(242, 242, 240, 0.06);
+    border: 1px solid rgba(242, 242, 240, 0.1);
+    color: var(--tep-dim);
+  }
+  :global([data-theme='light']) .comments-count {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .comments-link {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--tep-teal);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .comments-link:hover {
+    color: var(--tep-yellow);
+  }
+  :global([data-theme='light']) .comments-link {
+    color: var(--tep-green);
+  }
+  :global([data-theme='light']) .comments-link:hover {
+    color: var(--tep-green-light);
   }
   .post-comments :global(#discourse-comments) {
     min-height: 200px;
