@@ -8,12 +8,15 @@
 // - discourseEmbedUrl: canonical page URL, Discourse auto-creates/finds the
 //   linked topic. Fallback for pages without a known topic id.
 //
-// NOTE: we deliberately do NOT use the newer "full app mode"
-// (https://meta.discourse.org/t/399743 — fullApp + embedHeight). It renders
-// a fixed-height app frame with forum-owned styling that clashes with the
-// site design. The classic embed auto-sizes to the reply list and lets the
-// surrounding page own the styling. Revisit if the forum ships Embedded-CSS
-// theming that matches the site.
+// NOTE: we deliberately use the classic topic embed (not the newer "full app
+// mode" from https://meta.discourse.org/t/399743). Full app renders a fixed
+// forum-styled app window that clashes with the site design; the classic
+// embed auto-sizes to the reply list and lets the page own the styling.
+// Sizing params below mirror the official demo
+// (https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/):
+// dynamic height bounded by min/max so the frame fits its content instead of
+// a rigid box. Revisit full app if the forum ships Embedded-CSS theming that
+// matches the site.
 //
 // Requires Admin > Customize > Embedding on the forum to allow-list
 // `theeastpacific.com` as an Embeddable Host.
@@ -43,15 +46,25 @@ const {
   define:vars={{ discourseUrl, embedUrl, topicId, className }}
 >
   // Prefer topicId (existing topic) — otherwise fall back to embed URL mode.
+  // Height params mirror the official demo: the frame tracks content height
+  // within bounds instead of a rigid fixed-height box.
   window.DiscourseEmbed = Number.isInteger(topicId)
     ? {
         discourseUrl: discourseUrl,
         topicId: topicId,
+        dynamicHeight: true,
+        embedMinHeight: '500',
+        embedMaxHeight: '1600',
+        embedHeight: '800px',
         ...(className ? { className } : {}),
       }
     : {
         discourseUrl: discourseUrl,
         discourseEmbedUrl: embedUrl,
+        dynamicHeight: true,
+        embedMinHeight: '500',
+        embedMaxHeight: '1600',
+        embedHeight: '800px',
         ...(className ? { className } : {}),
       };
 
