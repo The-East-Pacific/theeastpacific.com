@@ -180,17 +180,33 @@ const replyCount = Number.isInteger(frontmatter?.replies) ? frontmatter.replies 
   }
   .post-comments :global(#discourse-comments) {
     min-height: 200px;
-  }
-  /* The embedded forum thread brings its own (forum-styled) background, so
-     frame it deliberately on both themes. */
-  .post-comments :global(iframe) {
     width: 100%;
+    padding: 1em;
+    overflow: hidden;
+    background: #1a1a1a;
     border: 1px solid rgba(242, 242, 240, 0.08);
     border-radius: 14px;
-    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-  :global([data-theme='light']) .post-comments :global(iframe) {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+  @media (min-width: 720px) {
+    .post-comments :global(#discourse-comments) {
+      padding: 2em;
+    }
+  }
+  :global([data-theme='light']) .post-comments :global(#discourse-comments) {
     background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  /* The embedded forum thread brings its own background, so the frame
+     itself stays unstyled — the card container above owns the look. */
+  .post-comments :global(iframe) {
+    width: 100%;
+    display: block;
+  }
+  @media (max-width: 719px) {
+    .post-comments :global(iframe) {
+      max-height: 70vh;
+    }
   }
 </style>
