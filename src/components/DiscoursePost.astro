@@ -120,7 +120,16 @@ function formatDate(value) {
   .post-comments :global(#discourse-comments) {
     min-height: 200px;
   }
+  /* The embedded forum thread brings its own (forum-styled) background, so
+     frame it deliberately on both themes. */
   .post-comments :global(iframe) {
     width: 100%;
+    border: 1px solid rgba(242, 242, 240, 0.08);
+    border-radius: 14px;
+    background: #1a1a1a;
+  }
+  :global([data-theme='light']) .post-comments :global(iframe) {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #ffffff;
   }
 </style>

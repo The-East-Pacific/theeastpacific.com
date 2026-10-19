@@ -62,6 +62,13 @@ const currentPath = Astro.url.pathname;
     display: flex;
     flex-direction: column;
   }
+
+  /* Blog pages must follow the light theme too, matching the forum's
+     light surfaces (page #ffffff, text #281f24). */
+  html[data-theme='light'] body {
+    background: #ffffff;
+    color: #281f24;
+  }
   
   .site-main {
     flex: 1;

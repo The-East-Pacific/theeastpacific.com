@@ -41,6 +41,10 @@
 }
 
 :root[data-theme='light'] {
+  /* Secondary text must stay readable on the white page — forum light
+     metadata tones instead of the dark-theme muted/dim values. */
+  --tep-muted: #6a6066;
+  --tep-dim: #4a4046;
   --sl-color-accent-low:    #fcf7bd;
   --sl-color-accent:        #c8b91e;
   --sl-color-accent-high:   #867c06;
