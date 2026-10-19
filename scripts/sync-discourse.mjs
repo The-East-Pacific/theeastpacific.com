@@ -69,7 +69,7 @@ const CATEGORY_ID = 34;
 // auto-generated "About this category" boilerplate topic, and the
 // auto-created embed duplicates (real topics are linked via TopicEmbed
 // mappings on the forum instead — see src/components/DiscourseComments.astro).
-const EXCLUDED_TOPIC_IDS = new Set([15772, 20156, 20157]);
+const EXCLUDED_TOPIC_IDS = new Set([15772, 20156, 20157, 20158]);
 
 async function fetchJson(url) {
   const res = await fetch(url);
