@@ -1,27 +1,24 @@
 ---
-// Full Discourse comment embed per official spec:
-// https://meta.discourse.org/t/embed-discourse-comments-on-another-website-via-javascript/31963
+// Discourse embed, mirroring the official demo exactly:
+// https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/
+// (specs: https://meta.discourse.org/t/31963 and
+// https://meta.discourse.org/t/399743)
 //
-// Two modes (spec supports both):
-// - topicId: links embed to an EXISTING forum topic. Use this when the page
-//   was synced from the forum (we know discourseId). Shows existing replies.
-// - discourseEmbedUrl: canonical page URL, Discourse auto-creates/finds the
-//   linked topic. Fallback for pages without a known topic id.
+// Demo-exact config: discourseEmbedUrl + fullApp + dynamic height bounds.
+// We intentionally do NOT send topicId: with full app mode it makes the
+// iframe render the whole forum page instead of the trimmed embed view.
+// Topic resolution therefore happens via the canonical page URL, exactly
+// like the demo.
 //
-// NOTE on rendering mode: the official demo
-// (https://blog.discourse.org/2018/06/understanding-discourse-trust-levels/)
-// pairs "full app mode" (https://meta.discourse.org/t/399743 — interactive
-// reply/like/quote inside the page) with dynamic height bounds, and that is
-// what we mirror here. Full app alone in a rigid fixed-height box looks
-// wrong; dynamicHeight lets the frame fit its content between min and max.
-//
-// Requires Admin > Customize > Embedding on the forum to allow-list
-// `theeastpacific.com` as an Embeddable Host.
+// IMPORTANT forum-side setup (otherwise topics duplicate or won't load):
+// - Admin > Customize > Embedding allow-lists `theeastpacific.com`.
+// - Admin > Advanced > Embedding enables full app mode (`embed_full_app`).
+// - Existing topics must be linked to their page URLs first, or the first
+//   visit auto-creates a DUPLICATE topic. In a Rails console on the forum:
+//     TopicEmbed.find_or_create_by!(embed_url: 'https://theeastpacific.com/blog/<slug>/', topic_id: <id>)
 interface Props {
-  /** Existing Discourse topic id (preferred — shows current replies) */
-  topicId?: number;
   /** Canonical URL of this page, e.g. https://theeastpacific.com/blog/my-post/ */
-  embedUrl?: string;
+  embedUrl: string;
   /** Base URL of the Discourse forum, with trailing slash */
   discourseUrl?: string;
   /** Optional class added to the embed iframe wrapper */
@@ -29,7 +26,6 @@ interface Props {
 }
 
 const {
-  topicId,
   embedUrl,
   discourseUrl = 'https://forum.theeastpacific.com/',
   className,
@@ -40,15 +36,11 @@ const {
 <script
   is:inline
   type="text/javascript"
-  define:vars={{ discourseUrl, embedUrl, topicId, className }}
+  define:vars={{ discourseUrl, embedUrl, className }}
 >
-  // Prefer topicId (existing topic) — otherwise fall back to embed URL mode.
-  // fullApp + dynamic height bounds mirror the official demo exactly; the
-  // topicId (vs the demo's discourseEmbedUrl) only changes WHICH topic
-  // resolves, and keeps us from spawning duplicate topics for pages the
-  // forum already has. Requires the forum's `embed_full_app` toggle on.
-  var baseEmbed = {
+  window.DiscourseEmbed = {
     discourseUrl: discourseUrl,
+    discourseEmbedUrl: embedUrl,
     fullApp: true,
     dynamicHeight: true,
     embedMinHeight: '500',
@@ -56,9 +48,6 @@ const {
     embedHeight: '800px',
     ...(className ? { className } : {}),
   };
-  window.DiscourseEmbed = Number.isInteger(topicId)
-    ? { ...baseEmbed, topicId: topicId }
-    : { ...baseEmbed, discourseEmbedUrl: embedUrl };
 
   (function () {
     var d = document.createElement('script');

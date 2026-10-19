@@ -1,15 +1,10 @@
 ---
 import DiscourseComments from './DiscourseComments.astro';
 
-// Renders a single blog post with full embedded Discourse comments
-// embedUrl: canonical page URL (fallback). discourseId: existing forum topic
-// id — when present we embed that topic directly so existing replies show.
-const { frontmatter, embedUrl, discourseId } = Astro.props;
-const topicId = Number.isInteger(discourseId)
-  ? discourseId
-  : Number.isInteger(frontmatter?.discourseId)
-    ? frontmatter.discourseId
-    : undefined;
+// Renders a single blog post with the demo-exact Discourse embed
+// (discourseEmbedUrl + full app + dynamic height bounds).
+// embedUrl: canonical page URL — this is what resolves the forum topic.
+const { frontmatter, embedUrl } = Astro.props;
 
 function formatDate(value) {
   if (!value) return '';
@@ -38,7 +33,7 @@ const replyCount = Number.isInteger(frontmatter?.replies) ? frontmatter.replies 
     <slot />
   </div>
 
-  {(topicId || embedUrl) && (
+  {embedUrl && (
     <section class="post-comments" aria-label="Comments">
       <div class="comments-head">
         <h2>
@@ -56,7 +51,7 @@ const replyCount = Number.isInteger(frontmatter?.replies) ? frontmatter.replies 
           </a>
         )}
       </div>
-      <DiscourseComments topicId={topicId} embedUrl={embedUrl} className="tep-comments" />
+      <DiscourseComments embedUrl={embedUrl} className="tep-comments" />
     </section>
   )}
 </article>

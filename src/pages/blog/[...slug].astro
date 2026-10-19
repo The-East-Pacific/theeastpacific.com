@@ -14,15 +14,14 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-// Canonical URL for Discourse embed fallback (per discourseEmbedUrl spec).
-// Primary mode is topicId (existing forum topic) so current replies show.
+// Canonical URL for the Discourse embed (per discourseEmbedUrl spec) — this
+// is what resolves the forum topic, demo-exact.
 // Astro.site is https://theeastpacific.com — pathname is /blog/<slug>/.
 const embedUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://theeastpacific.com').href;
-const discourseId = post.data.discourseId;
 ---
 <BaseLayout title={`${post.data.title} | Urth, Valsora, The East Pacific`}>
   <article class="blog-post-wrapper">
-    <BlogPost frontmatter={post.data} embedUrl={embedUrl} discourseId={discourseId}>
+    <BlogPost frontmatter={post.data} embedUrl={embedUrl}>
       <Content />
     </BlogPost>
   </article>
