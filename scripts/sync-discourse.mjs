@@ -66,8 +66,10 @@ const CATEGORY_SLUG = 'community/administrative-announcements';
 const CATEGORY_ID = 34;
 
 // Topics that should never appear on the site, e.g. Discourse's
-// auto-generated "About this category" boilerplate topic.
-const EXCLUDED_TOPIC_IDS = new Set([15772]);
+// auto-generated "About this category" boilerplate topic, and the
+// auto-created embed duplicates (real topics are linked via TopicEmbed
+// mappings on the forum instead — see src/components/DiscourseComments.astro).
+const EXCLUDED_TOPIC_IDS = new Set([15772, 20156, 20157]);
 
 async function fetchJson(url) {
   const res = await fetch(url);
