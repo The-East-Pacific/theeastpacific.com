@@ -11,10 +11,16 @@ export default defineConfig({
       title: 'Urth, Valsora, The East Pacific',
       description: 'News, announcements, and stories from Urth, Valsora, The East Pacific.',
       logo: {
-        src: './src/assets/logo.svg',
+        src: './src/assets/logo.png',
         replacesTitle: false,
       },
       favicon: '/favicon.ico',
+      head: [
+        {
+          tag: 'link',
+          attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        },
+      ],
       customCss: ['./src/styles/custom.css'],
       components: {
         Header: './src/components/Header.astro',
