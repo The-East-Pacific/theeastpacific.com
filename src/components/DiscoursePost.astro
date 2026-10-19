@@ -1,6 +1,8 @@
 ---
-// Renders a single blog post with a "Discuss on forum" link at the bottom
-const { frontmatter } = Astro.props;
+import DiscourseComments from './DiscourseComments.astro';
+
+// Renders a single blog post with full embedded Discourse comments
+const { frontmatter, embedUrl } = Astro.props;
 
 function formatDate(value) {
   if (!value) return '';
@@ -58,6 +60,12 @@ const discussionLabel =
         Join the discussion
         <span class="discussion-ext" aria-hidden="true">↗</span>
       </a>
+    </section>
+  )}
+
+  {embedUrl && (
+    <section class="post-comments" aria-label="Comments">
+      <DiscourseComments embedUrl={embedUrl} />
     </section>
   )}
 </article>
@@ -194,6 +202,15 @@ const discussionLabel =
     color: #ffffff;
   }
   .discussion-ext { font-size: 0.8rem; }
+  .post-comments {
+    margin-top: 2.5rem;
+  }
+  .post-comments :global(#discourse-comments) {
+    min-height: 200px;
+  }
+  .post-comments :global(iframe) {
+    width: 100%;
+  }
   @media (max-width: 560px) {
     .post-discussion {
       flex-direction: column;

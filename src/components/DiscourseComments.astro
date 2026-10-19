@@ -1,0 +1,50 @@
+---
+// Full Discourse comment embed per official spec:
+// https://meta.discourse.org/t/embed-discourse-comments-on-another-website-via-javascript/31963
+//
+// Uses discourseEmbedUrl (canonical page URL) so Discourse auto-creates/finds
+// the linked topic. Requires Admin > Customize > Embedding on the forum to
+// allow-list `theeastpacific.com` as an Embeddable Host.
+interface Props {
+  /** Canonical URL of this page, e.g. https://theeastpacific.com/blog/my-post/ */
+  embedUrl: string;
+  /** Base URL of the Discourse forum, with trailing slash */
+  discourseUrl?: string;
+  /** Optional class added to the embed iframe wrapper */
+  className?: string;
+}
+
+const {
+  embedUrl,
+  discourseUrl = 'https://forum.theeastpacific.com/',
+  className,
+} = Astro.props;
+---
+<div id="discourse-comments"></div>
+
+<script
+  is:inline
+  type="text/javascript"
+  define:vars={{ discourseUrl, embedUrl, className }}
+>
+  window.DiscourseEmbed = {
+    discourseUrl: discourseUrl,
+    discourseEmbedUrl: embedUrl,
+    ...(className ? { className } : {}),
+  };
+
+  (function () {
+    var d = document.createElement('script');
+    d.type = 'text/javascript';
+    d.async = true;
+    d.src = window.DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+  })();
+</script>
+
+<noscript>
+  <p>
+    Please enable JavaScript to view the comments, or
+    <a href={discourseUrl} target="_blank" rel="noopener noreferrer">visit the forum</a>.
+  </p>
+</noscript>
