@@ -1,6 +1,7 @@
 ---
 import { siteNav, isNavActive } from '../data/site';
 import SiteBrand from './SiteBrand.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 const { currentPath = Astro.url.pathname } = Astro.props;
 ---
@@ -20,6 +21,8 @@ const { currentPath = Astro.url.pathname } = Astro.props;
         </a>
       ))}
     </nav>
+
+    <ThemeToggle />
   </div>
 </header>
 

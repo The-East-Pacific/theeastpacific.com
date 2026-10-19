@@ -1,0 +1,141 @@
+---
+// Theme toggle for non-Starlight pages (blog posts).
+// Mirrors Starlight's ThemeSelect behavior: follows the OS color scheme by
+// default ("auto"), with an optional manual light/dark override. Shares
+// Starlight's `starlight-theme` localStorage key and the
+// `document.documentElement.dataset.theme` attribute, so the choice stays in
+// sync when navigating between docs pages and blog posts.
+---
+
+<theme-toggle data-setting="auto">
+  <button
+    type="button"
+    class="theme-toggle"
+    data-setting="auto"
+    aria-label="Color theme: auto (system). Activate to switch to light."
+  >
+    <svg class="icon icon-auto" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect width="20" height="14" x="2" y="3" rx="2" />
+      <line x1="8" x2="16" y1="21" y2="21" />
+      <line x1="12" x2="12" y1="17" y2="21" />
+    </svg>
+    <svg class="icon icon-light" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2" />
+      <path d="M12 20v2" />
+      <path d="m4.93 4.93 1.41 1.41" />
+      <path d="m17.66 17.66 1.41 1.41" />
+      <path d="M2 12h2" />
+      <path d="M20 12h2" />
+      <path d="m6.34 17.66-1.41 1.41" />
+      <path d="m19.07 4.93-1.41 1.41" />
+    </svg>
+    <svg class="icon icon-dark" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+  </button>
+</theme-toggle>
+
+<script>
+  (function () {
+    var storageKey = 'starlight-theme';
+    var order = ['auto', 'light', 'dark'];
+    var labels = { auto: 'auto (system)', light: 'light', dark: 'dark' };
+    var nextLabels = { auto: 'light', light: 'dark', dark: 'auto (system)' };
+
+    function parseTheme(value) {
+      return value === 'light' || value === 'dark' ? value : 'auto';
+    }
+
+    function loadTheme() {
+      try {
+        return parseTheme(localStorage.getItem(storageKey));
+      } catch (e) {
+        return 'auto';
+      }
+    }
+
+    function effectiveTheme(setting) {
+      if (setting === 'light' || setting === 'dark') return setting;
+      return matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+
+    function apply(setting) {
+      try {
+        localStorage.setItem(storageKey, setting === 'auto' ? '' : setting);
+      } catch (e) {
+        /* storage unavailable — keep in-memory theme only */
+      }
+      document.documentElement.dataset.theme = effectiveTheme(setting);
+    }
+
+    function sync(element, button, setting) {
+      element.setAttribute('data-setting', setting);
+      button.setAttribute('data-setting', setting);
+      button.setAttribute(
+        'aria-label',
+        'Color theme: ' + labels[setting] + '. Activate to switch to ' + nextLabels[setting] + '.'
+      );
+    }
+
+    document.querySelectorAll('theme-toggle').forEach(function (element) {
+      if (element.dataset.upgraded) return;
+      element.dataset.upgraded = 'true';
+      var button = element.querySelector('button');
+      if (!button) return;
+      sync(element, button, loadTheme());
+      button.addEventListener('click', function () {
+        var current = element.getAttribute('data-setting') || 'auto';
+        var next = order[(order.indexOf(current) + 1) % order.length];
+        sync(element, button, next);
+        apply(next);
+      });
+      // Follow OS changes live while in auto mode.
+      matchMedia('(prefers-color-scheme: light)').addEventListener('change', function () {
+        if ((element.getAttribute('data-setting') || 'auto') === 'auto') {
+          sync(element, button, 'auto');
+          apply('auto');
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--tep-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .theme-toggle:hover {
+    color: var(--tep-light);
+    background: rgba(242, 242, 240, 0.05);
+  }
+  :global([data-theme='light']) .theme-toggle {
+    color: #6a6066;
+  }
+  :global([data-theme='light']) .theme-toggle:hover {
+    color: #281f24;
+    background: rgba(0, 0, 0, 0.05);
+  }
+  .theme-toggle .icon {
+    display: none;
+  }
+  .theme-toggle[data-setting='auto'] .icon-auto,
+  .theme-toggle[data-setting='light'] .icon-light,
+  .theme-toggle[data-setting='dark'] .icon-dark {
+    display: block;
+  }
+</style>
