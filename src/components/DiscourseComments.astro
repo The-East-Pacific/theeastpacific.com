@@ -2,12 +2,19 @@
 // Full Discourse comment embed per official spec:
 // https://meta.discourse.org/t/embed-discourse-comments-on-another-website-via-javascript/31963
 //
-// Uses discourseEmbedUrl (canonical page URL) so Discourse auto-creates/finds
-// the linked topic. Requires Admin > Customize > Embedding on the forum to
-// allow-list `theeastpacific.com` as an Embeddable Host.
+// Two modes (spec supports both):
+// - topicId: links embed to an EXISTING forum topic. Use this when the page
+//   was synced from the forum (we know discourseId). Shows existing replies.
+// - discourseEmbedUrl: canonical page URL, Discourse auto-creates/finds the
+//   linked topic. Fallback for pages without a known topic id.
+//
+// Requires Admin > Customize > Embedding on the forum to allow-list
+// `theeastpacific.com` as an Embeddable Host.
 interface Props {
+  /** Existing Discourse topic id (preferred — shows current replies) */
+  topicId?: number;
   /** Canonical URL of this page, e.g. https://theeastpacific.com/blog/my-post/ */
-  embedUrl: string;
+  embedUrl?: string;
   /** Base URL of the Discourse forum, with trailing slash */
   discourseUrl?: string;
   /** Optional class added to the embed iframe wrapper */
@@ -15,6 +22,7 @@ interface Props {
 }
 
 const {
+  topicId,
   embedUrl,
   discourseUrl = 'https://forum.theeastpacific.com/',
   className,
@@ -25,13 +33,20 @@ const {
 <script
   is:inline
   type="text/javascript"
-  define:vars={{ discourseUrl, embedUrl, className }}
+  define:vars={{ discourseUrl, embedUrl, topicId, className }}
 >
-  window.DiscourseEmbed = {
-    discourseUrl: discourseUrl,
-    discourseEmbedUrl: embedUrl,
-    ...(className ? { className } : {}),
-  };
+  // Prefer topicId (existing topic) — otherwise fall back to embed URL mode.
+  window.DiscourseEmbed = Number.isInteger(topicId)
+    ? {
+        discourseUrl: discourseUrl,
+        topicId: topicId,
+        ...(className ? { className } : {}),
+      }
+    : {
+        discourseUrl: discourseUrl,
+        discourseEmbedUrl: embedUrl,
+        ...(className ? { className } : {}),
+      };
 
   (function () {
     var d = document.createElement('script');

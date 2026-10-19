@@ -89,15 +89,45 @@ async function sync() {
   await fs.mkdir(OUT_DIR, { recursive: true });
   const topics = await listTopics();
   console.log(`Found ${topics.length} topics in category ${CATEGORY_ID}`);
+  const validIds = new Set(topics.map((t) => String(t.id)));
+  // Filenames successfully written this run — used to clean up stale slugs
+  // without deleting topics that merely failed to fetch.
+  const writtenById = new Map();
   for (const topic of topics) {
     try {
       const data = await fetchTopic(topic.id);
+      // Topic may have been moved out of Administrative Announcements
+      // (e.g. split off to Trust and Safety) between listing and fetch.
+      if (data.category_id !== CATEGORY_ID) {
+        console.log(`Skipping ${topic.id}: now in category ${data.category_id}`);
+        continue;
+      }
       const slug = `${data.id}-${data.slug}`;
       const content = toFrontmatter(data, topic);
-      await fs.writeFile(path.join(OUT_DIR, `${slug}.md`), content, 'utf8');
+      const filename = `${slug}.md`;
+      await fs.writeFile(path.join(OUT_DIR, filename), content, 'utf8');
+      writtenById.set(String(data.id), filename);
       console.log('Wrote', slug);
     } catch (err) {
       console.error(`Skipping topic ${topic.id}: ${err.message}`);
+    }
+  }
+
+  // Prune local posts whose topics left category 34 (moved, deleted, or
+  // split off elsewhere). Without this, moved topics linger on the site.
+  const files = await fs.readdir(OUT_DIR);
+  for (const file of files) {
+    if (!file.endsWith('.md')) continue;
+    const m = file.match(/^(\d+)-.*\.md$/);
+    if (!m) continue;
+    const id = m[1];
+    if (!validIds.has(id)) {
+      await fs.unlink(path.join(OUT_DIR, file));
+      console.log('Removed (left category):', file);
+    } else if (writtenById.has(id) && writtenById.get(id) !== file) {
+      // Same topic id, stale slug (topic renamed) — keep the fresh file.
+      await fs.unlink(path.join(OUT_DIR, file));
+      console.log('Removed (stale slug):', file);
     }
   }
 }

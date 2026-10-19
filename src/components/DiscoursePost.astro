@@ -2,7 +2,14 @@
 import DiscourseComments from './DiscourseComments.astro';
 
 // Renders a single blog post with full embedded Discourse comments
-const { frontmatter, embedUrl } = Astro.props;
+// embedUrl: canonical page URL (fallback). discourseId: existing forum topic
+// id — when present we embed that topic directly so existing replies show.
+const { frontmatter, embedUrl, discourseId } = Astro.props;
+const topicId = Number.isInteger(discourseId)
+  ? discourseId
+  : Number.isInteger(frontmatter?.discourseId)
+    ? frontmatter.discourseId
+    : undefined;
 
 function formatDate(value) {
   if (!value) return '';
@@ -63,9 +70,9 @@ const discussionLabel =
     </section>
   )}
 
-  {embedUrl && (
+  {(topicId || embedUrl) && (
     <section class="post-comments" aria-label="Comments">
-      <DiscourseComments embedUrl={embedUrl} />
+      <DiscourseComments topicId={topicId} embedUrl={embedUrl} />
     </section>
   )}
 </article>
