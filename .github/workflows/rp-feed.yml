@@ -50,16 +50,17 @@ jobs:
 
       - name: Save state
         run: |
-          cp /tmp/rp-feed-state.new.json ./rp-feed-state.json
           git fetch origin rp-feed-state || true
           # Base the commit on the remote state branch tip — branching from
           # main instead makes every push after the first fail as
-          # non-fast-forward.
+          # non-fast-forward. Check out BEFORE copying the new state file in,
+          # or the checkout refuses to overwrite it.
           if git rev-parse --verify origin/rp-feed-state >/dev/null 2>&1; then
             git checkout -B rp-feed-state origin/rp-feed-state
           else
             git checkout -B rp-feed-state
           fi
+          cp /tmp/rp-feed-state.new.json ./rp-feed-state.json
           git add rp-feed-state.json
           if git diff --cached --quiet; then
             echo "No state change, skipping push."
