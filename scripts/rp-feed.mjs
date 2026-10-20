@@ -22,6 +22,8 @@
  *   MAX_PER_TOPIC / MAX_TOTAL caps per run (defaults 10 / 30)
  */
 
+import { htmlToDiscordMarkdown, neutralizeMentions } from './discord-markdown.mjs';
+
 const FORUM_BASE = process.env.FORUM_BASE || 'https://forum.theeastpacific.com';
 const CATEGORY_IDS = (process.env.FEED_CATEGORY_IDS || '16,78').split(',').map(Number);
 const DISCORD_URL = process.env.DISCORD_WEBHOOK_URL || '';
@@ -37,22 +39,6 @@ const EXCERPT_MAX = 300;
 
 const log = (fields) => console.log(JSON.stringify({ service: 'rp-feed', ...fields }));
 
-function toPlainText(html) {
-  return String(html || '')
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function neutralizeMentions(text) {
-  return text.replace(/@(everyone|here)/gi, '@\u200b$1');
-}
-
 function buildMessage(post, topicTitle) {
   const url = `${FORUM_BASE}/t/${post.topic_slug}/${post.topic_id}/${post.post_number}`;
   const isNewTopic = post.post_number === 1;
@@ -63,8 +49,8 @@ function buildMessage(post, topicTitle) {
       {
         title: String(topicTitle).slice(0, 256),
         url,
-        description: neutralizeMentions(toPlainText(post.cooked).slice(0, EXCERPT_MAX)) || '(no text content)',
-        color: 0x1a6f34,
+        description: neutralizeMentions(htmlToDiscordMarkdown(post.cooked).slice(0, EXCERPT_MAX)) || '(no text content)',
+        color: 7575989,
         author: { name: `@${post.username}`.slice(0, 256) },
         footer: { text: isNewTopic ? 'New topic' : `Reply #${post.post_number}` },
         timestamp: post.created_at || undefined,
