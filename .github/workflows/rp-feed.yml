@@ -1,0 +1,62 @@
+name: RP Feed to Discord
+
+# Polls Urth + News Broadcasts every 5 minutes and forwards new posts to a
+# Discord channel webhook as a no-ping feed. State lives in rp-feed-state.json
+# on the `rp-feed-state` branch (NOT main) so state commits never trigger a
+# site redeploy.
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rp-feed
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Load previous state
+        run: |
+          git fetch origin rp-feed-state || true
+          if git rev-parse --verify origin/rp-feed-state >/dev/null 2>&1; then
+            git show origin/rp-feed-state:rp-feed-state.json > /tmp/rp-feed-state.json
+            echo "FIRST_RUN=false" >> "$GITHUB_ENV"
+          else
+            echo '{"topics":{}}' > /tmp/rp-feed-state.json
+            echo "FIRST_RUN=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Poll forum and post to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          STATE_PATH: /tmp/rp-feed-state.json
+          OUT_PATH: /tmp/rp-feed-state.new.json
+          FIRST_RUN: ${{ env.FIRST_RUN }}
+        run: node scripts/rp-feed.mjs
+
+      - name: Save state
+        run: |
+          cp /tmp/rp-feed-state.new.json ./rp-feed-state.json
+          git fetch origin rp-feed-state || true
+          git checkout -B rp-feed-state
+          git add rp-feed-state.json
+          if git diff --cached --quiet; then
+            echo "No state change, skipping push."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "chore: update rp-feed state"
+          git push -u origin rp-feed-state
