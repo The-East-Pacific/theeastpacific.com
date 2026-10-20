@@ -30,6 +30,7 @@ const OUT_PATH = process.env.OUT_PATH || STATE_PATH;
 const FIRST_RUN = process.env.FIRST_RUN === 'true';
 const DRY_RUN = process.env.DRY_RUN === '1' || !DISCORD_URL;
 const RECENT_HOURS = Number(process.env.RECENT_HOURS) || 24;
+const FEED_USERNAME = process.env.FEED_USERNAME || 'Urth News Network';
 const MAX_PER_TOPIC = Number(process.env.MAX_PER_TOPIC) || 10;
 const MAX_TOTAL = Number(process.env.MAX_TOTAL) || 30;
 const EXCERPT_MAX = 300;
@@ -56,7 +57,7 @@ function buildMessage(post, topicTitle) {
   const url = `${FORUM_BASE}/t/${post.topic_slug}/${post.topic_id}/${post.post_number}`;
   const isNewTopic = post.post_number === 1;
   return {
-    username: 'TEP Forum Feed',
+    username: FEED_USERNAME,
     allowed_mentions: { parse: [] },
     embeds: [
       {
